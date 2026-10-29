@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Collab Radar feed v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "isDemo",
+    "updatedAt",
+    "events"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "isDemo": {
+      "type": "boolean"
+    },
+    "updatedAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "game",
+          "brand",
+          "title",
+          "category",
+          "regions",
+          "startDate",
+          "endDate",
+          "publishedDate",
+          "steps",
+          "location",
+          "requirement"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "game": {
+            "type": "string",
+            "minLength": 1
+          },
+          "brand": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "notice": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "publishedDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CN",
+                "MY",
+                "SG"
+              ]
+            },
+            "minItems": 1
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "rewards": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "category": {
+            "enum": [
+              "drink",
+              "food",
+              "fashion",
+              "retail",
+              "game"
+            ]
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "sourceUrl": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^https://"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "isDemo": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "events": {
+            "items": {
+              "required": [
+                "sourceUrl"
+              ],
+              "properties": {
+                "sourceUrl": {
+                  "type": "string",
+                  "pattern": "^https://"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

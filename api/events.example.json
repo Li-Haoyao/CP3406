@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "isDemo": true,
+  "updatedAt": "2026-10-12T08:00:00Z",
+  "events": [
+    {
+      "id": "example-drink-001",
+      "game": "星轨漫游",
+      "brand": "青柚茶研",
+      "title": "把星光，装进这一杯。",
+      "tagline": "一杯限定，开启次元漫游",
+      "category": "drink",
+      "regions": [
+        "CN",
+        "SG"
+      ],
+      "startDate": "2026-10-06",
+      "endDate": "2026-10-20",
+      "publishedDate": "2026-10-04",
+      "rewards": [
+        "限定杯套",
+        "角色透卡"
+      ],
+      "steps": [
+        "查看参与门店与供应时间。",
+        "选择指定联动饮品。",
+        "按演示规则领取赠品。"
+      ],
+      "location": "指定门店（演示）",
+      "requirement": "购买指定饮品（演示规则）",
+      "notice": "本活动为虚构演示，不代表真实品牌合作。",
+      "sourceUrl": null,
+      "featured": true
+    }
+  ]
+}
