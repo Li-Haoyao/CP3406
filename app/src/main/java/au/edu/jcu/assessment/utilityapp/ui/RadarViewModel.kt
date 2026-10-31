@@ -44,6 +44,8 @@ class RadarViewModel(private val repository: CollabRepository, private val accou
     private var loadJob: Job? = null
     init {
         showDemo(resetGame = false)
+        val feedUrl = preferencesStore.feedUrl()
+        if (feedUrl.isNotBlank()) loadRemote(feedUrl)
         restoreAccount()
         viewModelScope.launch { while (true) { delay(60_000); state.update { it.copy(today = LocalDate.now()) } } }
     }
@@ -76,6 +78,7 @@ class RadarViewModel(private val repository: CollabRepository, private val accou
     }
     fun showDemo(resetGame: Boolean = true) {
         loadJob?.cancel()
+        if (resetGame) preferencesStore.saveFeedUrl("")
         val catalog = repository.demo(LocalDate.now())
         if (resetGame) updatePreferences(state.value.preferences.copy(game = "全部游戏"))
         state.update { it.copy(events = catalog.events, today = LocalDate.now(), isDemo = true, loading = false,
@@ -88,9 +91,10 @@ class RadarViewModel(private val repository: CollabRepository, private val accou
     fun loadRemote(url: String) {
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
-            state.update { it.copy(loading = true, error = null) }
+            state.update { it.copy(loading = true, error = null, remoteUrl = url.trim()) }
             try {
                 val catalog = repository.remote(url)
+                preferencesStore.saveFeedUrl(url)
                 state.update { it.copy(events = catalog.events, isDemo = catalog.isDemo, updatedAt = catalog.updatedAt,
                     remoteUrl = url.trim(), loading = false, today = LocalDate.now()) }
             } catch (e: CancellationException) { throw e
