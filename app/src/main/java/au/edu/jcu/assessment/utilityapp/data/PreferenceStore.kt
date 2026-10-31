@@ -13,6 +13,11 @@ class PreferenceStore(context: Context) {
     fun save(p: Preferences) { storage.edit().putString("region", p.region.code).putString("game", p.game)
         .putString("category", p.defaultCategory.code).putString("sort", p.sortOrder.name)
         .putBoolean("show_ended", p.showEnded).putBoolean("dark", p.darkMode).apply() }
+    fun feedUrl(): String = storage.getString("feed_url", DEFAULT_FEED_URL) ?: DEFAULT_FEED_URL
+    fun saveFeedUrl(url: String) { storage.edit().putString("feed_url", url.trim()).apply() }
+    companion object {
+        const val DEFAULT_FEED_URL = "https://raw.githubusercontent.com/Li-Haoyao/CP3406/main/api/events.example.json"
+    }
     fun guestFavorites(): Set<String> = storage.getStringSet("guest_favorites", emptySet())!!.toSet()
     fun saveGuestFavorites(ids: Set<String>) { storage.edit().putStringSet("guest_favorites", ids.toSet()).apply() }
 }
