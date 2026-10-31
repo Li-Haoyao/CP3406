@@ -145,3 +145,24 @@ The recorded validation on **20 October 2026** completed the debug build, 19 And
 See `AI_ASSISTANCE.md` for the scope of AI-assisted debugging, reference support, implementation, localisation, testing, and documentation. This record does not replace the assessment's required Declaration of AI-Generated Material.
 
 The project retains the package name `au.edu.jcu.assessment.utilityapp`. Configure the application ID and signing settings appropriately before publishing.
+
+## Default online event feed
+
+The app now requests this public HTTPS JSON feed on startup (no API key):
+https://raw.githubusercontent.com/Li-Haoyao/CP3406/main/api/events.example.json
+
+Use the refresh icon to request it again. Under Me → Event data, you can connect
+another compatible HTTPS feed. A successful address is saved for the next launch.
+Selecting local demo mode keeps local demo mode on the next launch. A failed
+request shows an error, retains the current list, and allows retry with Refresh.
+The local list shown while connecting is labelled as demo data.
+
+The current hosted file contains a fictional, expired example. Enable “Show ended
+events” and select China or Singapore to see it. Malaysia has no entries in that
+file. This verifies remote retrieval, not live real-world event coverage.
+Maintain the JSON in api/events.example.json and publish changes to main to
+update the feed. Keep isDemo true for fictional data; verified real events require
+official source links. Account login is configured separately.
+
+Validation for this update: downloaded and parsed the public endpoint successfully.
+Android compilation and emulator verification must be run in Android Studio.
